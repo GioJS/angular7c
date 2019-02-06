@@ -13,7 +13,7 @@
     <div class="btn-group" appDropdown>
       <button type="button" class="btn btn-primary dropdown-toggle">Manage Recipe <span class="caret"></span></button>
       <ul class="dropdown-menu">
-        <li><a href="#">To shopping list</a></li>
+        <li><a href="#" style="cursor: pointer;" (click)="addToShop()">To shopping list</a></li>
         <li><a href="#">Edit recipe</a></li>
         <li><a href="#">Delete recipe</a></li>
       </ul>
@@ -25,10 +25,10 @@
     {{ recipeDetails.description }}
   </div>
 </div>
-<!--<div class="row">
+<div class="row">
   <div class="col-xs-12">
-    <ul *ngIf="recipeDetails.ingredients">
-      <li *ngFor="let ingredient of recipeDetails.ingredients">{{ ingredient.name }} ({{ ingredient.amount }})</li>
+    <ul class="list-group" *ngIf="recipeDetails.ingredients">
+      <li class="list-group-item" *ngFor="let ingredient of recipeDetails.ingredients">{{ ingredient.name }} ({{ ingredient.amount }})</li>
     </ul>
   </div>
-</div>-->
+</div>
