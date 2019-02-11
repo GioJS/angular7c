@@ -15,6 +15,7 @@ import {AppRouterModule} from './app-router.module';
 import {ErrorPageComponent} from './error-page/error-page.component';
 import {RecipeStartComponent} from "./recipes/recipe-start/recipe-start.component";
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,9 @@ import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
   ],
   imports: [
     BrowserModule,
-    AppRouterModule
+    AppRouterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [ShoppingListService],
   bootstrap: [AppComponent]
