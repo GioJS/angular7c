@@ -3,6 +3,9 @@ import {Ingredient} from '../../shared/ingredient.model';
 import {ShoppingListService} from '../shopping-list.service';
 import {NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {Store} from '@ngrx/store';
+import * as ShoppingListActions from '../store/shopping-list.actions';
+import * as fromShoppingList from '../store/shopping-list.reducers';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -10,13 +13,14 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./shopping-edit.component.css']
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
-  @ViewChild("f") form: NgForm;
+  @ViewChild('f') form: NgForm;
   private subscription: Subscription;
   editMode = false;
   editedItemIndex: number;
   editedItem: Ingredient;
 
-  constructor(private shoppingListService: ShoppingListService) {
+  constructor(private shoppingListService: ShoppingListService,
+              private store: Store<fromShoppingList.AppState>) {
   }
 
   ngOnInit() {
@@ -32,10 +36,13 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onNewItem(form: NgForm) {
-    if(this.editMode) {
-      this.shoppingListService.updateIngredient(this.editedItemIndex, new Ingredient(form.value.name, form.value.amount));
+    if (this.editMode) {
+      this.store.dispatch(new ShoppingListActions.UpdateIngredient({
+        index: this.editedItemIndex,
+        ingredient: new Ingredient(form.value.name, form.value.amount)
+      }));
     } else {
-      this.shoppingListService.addIngredient(new Ingredient(form.value.name, form.value.amount));
+      this.store.dispatch(new ShoppingListActions.AddIngredient(new Ingredient(form.value.name, form.value.amount)));
     }
     this.editMode = false;
     this.form.reset();
@@ -51,7 +58,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.shoppingListService.deleteItem(this.editedItemIndex);
+    this.store.dispatch(new ShoppingListActions.DeleteIngredient({index: this.editedItemIndex}));
     this.form.reset();
     this.editMode = false;
   }
